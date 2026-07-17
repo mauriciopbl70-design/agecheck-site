@@ -3,41 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgeCheck OS</title>
+
+<title>AgeCheck 3.0</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
 }
 
 body{
 height:100vh;
+background:#06140F;
 display:flex;
 align-items:center;
 justify-content:center;
-background:linear-gradient(135deg,#020617,#075985,#0ea5e9);
-color:white;
+color:#E8E3D8;
+font-family:Arial,sans-serif;
+overflow:hidden;
 }
 
-.container{
+body::before{
+content:"";
+position:absolute;
+width:400px;
+height:400px;
+background:#1F5A45;
+filter:blur(120px);
+opacity:.3;
+}
+
+.card{
+position:relative;
 width:90%;
-max-width:450px;
-background:rgba(255,255,255,.12);
-padding:30px;
-border-radius:25px;
-backdrop-filter:blur(15px);
+max-width:430px;
+background:rgba(11,23,18,.85);
+backdrop-filter:blur(10px);
+padding:35px;
+border-radius:20px;
+border:1px solid #1F5A45;
 text-align:center;
-box-shadow:0 0 30px #0008;
-animation:entrada 1s;
+box-shadow:0 0 30px rgba(31,90,69,.5);
+transition:.4s;
+}
+
+.tela{
+display:none;
+animation:entrada .5s;
+}
+
+.ativa{
+display:block;
 }
 
 @keyframes entrada{
 from{
 opacity:0;
-transform:translateY(40px);
+transform:translateY(30px);
 }
 to{
 opacity:1;
@@ -45,215 +71,465 @@ transform:translateY(0);
 }
 }
 
-.logo{
-font-size:60px;
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-50%{
-transform:scale(1.1);
-}
-}
-
 h1{
-margin:10px;
-font-size:35px;
+font-family:"PT Sans";
+font-style:italic;
+font-size:50px;
+color:#F5B800;
+}
+
+h2{
+color:#F5B800;
+margin-bottom:15px;
 }
 
 p{
-color:#dbeafe;
-margin-bottom:20px;
+margin:15px 0;
+}
+
+input{
+width:100%;
+padding:14px;
+margin:8px 0;
+border-radius:10px;
+border:1px solid #1F5A45;
+background:#06140F;
+color:white;
 }
 
 button{
 width:100%;
 padding:15px;
-margin:8px 0;
-border:0;
-border-radius:15px;
-background:linear-gradient(90deg,#06b6d4,#2563eb);
-color:white;
-font-size:16px;
+margin-top:15px;
+border:none;
+border-radius:10px;
+background:#F5B800;
+color:#06140F;
+font-weight:bold;
+font-size:18px;
 cursor:pointer;
+position:relative;
+overflow:hidden;
 }
 
 button:hover{
-transform:scale(1.04);
+box-shadow:0 0 25px #F5B800;
+transform:scale(1.03);
 }
 
-input{
-width:100%;
-padding:12px;
-border-radius:12px;
-border:0;
-margin:10px 0;
+button::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:50%;
+height:100%;
+background:white;
+opacity:.3;
+transform:skewX(-25deg);
+animation:brilho 3s infinite;
 }
 
-.tela{
-display:none;
+@keyframes brilho{
+100%{
+left:150%;
+}
 }
 
-.resultado{
-margin:15px 0;
-padding:15px;
-background:#0005;
-border-radius:15px;
+.erro{
+color:#ff3030;
+font-family:"Poppins";
+font-style:italic;
+font-size:28px;
+margin-top:15px;
+}
+
+.ok{
+color:#F5B800;
+font-size:25px;
+margin-top:15px;
+}
+
+.shake{
+animation:shake .4s;
+}
+
+@keyframes shake{
+
+0%{transform:translateX(0)}
+25%{transform:translateX(-12px)}
+50%{transform:translateX(12px)}
+75%{transform:translateX(-12px)}
+100%{transform:translateX(0)}
+
+}
+
+.card img{
+width:80px;
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-<div class="logo">🛡️</div>
-
-<h1>AgeCheck OS</h1>
-
-<p>Sistema inteligente de verificação de idade.</p>
+<div class="card" id="card">
 
 
-<div id="inicio">
+<div id="inicio" class="tela ativa">
 
-<button onclick="mostrar('idade')">
-✅ Verificar idade
-</button>
+<h1>AgeCheck</h1>
 
-<button onclick="mostrar('info')">
-🧠 Conscientização
-</button>
+<p>
+Sistema educativo de prevenção e conscientização sobre o consumo de álcool.
+</p>
 
-<button onclick="mostrar('ai')">
-🤖 Assistente AI
+<button onclick="comecar()">
+COMEÇAR
 </button>
 
 </div>
+
+
+
+<div id="identidade" class="tela">
+
+<h2>Verificação de identidade</h2>
+
+<input id="nome" placeholder="Nome completo">
+
+<input id="cpf" placeholder="CPF">
+
+<p id="tentativas">
+Tentativas restantes: 3
+</p>
+
+<button onclick="verificar()">
+VERIFICAR
+</button>
+
+<div id="resultado"></div>
+
+</div>
+
+
 
 
 <div id="idade" class="tela">
 
-<h2>Digite sua data de nascimento</h2>
+<h2>Verificação de idade</h2>
 
-<input type="date" id="data">
+<input id="data" type="date">
 
-<button onclick="verificar()">
-Analisar
+<button onclick="verificarIdade()">
+CONTINUAR
 </button>
 
-<div class="resultado" id="resultado">
-Esperando análise...
-</div>
-
-<button onclick="voltar()">
-Voltar
-</button>
+<div id="resultadoIdade"></div>
 
 </div>
 
 
-<div id="info" class="tela">
 
-<h2>Prevenção</h2>
+
+
+<div id="riscos" class="tela">
+
+<h2>Riscos para a saúde</h2>
 
 <p>
-O consumo de álcool por menores pode trazer riscos para a saúde,
-desenvolvimento e segurança.
+🧠 Pode afetar memória, atenção e desenvolvimento cerebral.
 </p>
-
-<button onclick="voltar()">
-Voltar
-</button>
-
-</div>
-
-
-<div id="ai" class="tela">
-
-<h2>🤖 AgeCheck AI</h2>
 
 <p>
-Olá! Sou o assistente do AgeCheck.
-Meu objetivo é ajudar com informações sobre idade,
-prevenção e saúde.
+❤️ Pode prejudicar órgãos como coração e fígado.
 </p>
 
-<button onclick="voltar()">
-Voltar
+<p>
+⚠️ O consumo frequente pode aumentar riscos de dependência.
+</p>
+
+<button onclick="finalizar()">
+FINALIZAR
 </button>
 
 </div>
 
 
+
+
+<div id="final" class="tela">
+
+<h1>Obrigado</h1>
+
+<p>
+Informação gera escolhas melhores.
+</p>
+
 </div>
+
+
+
+</div>
+
+
+
+<audio id="erro">
+<source src="erro.mp3">
+</audio>
+
+<audio id="sucesso">
+<source src="sucesso.mp3">
+</audio>
 
 
 <script>
 
-function mostrar(tela){
 
-document.getElementById("inicio").style.display="none";
+let tentativas=3;
 
-document.querySelectorAll(".tela").forEach(e=>{
-e.style.display="none";
+
+
+function trocar(id){
+
+document.querySelectorAll(".tela").forEach(t=>{
+t.classList.remove("ativa");
 });
 
-document.getElementById(tela).style.display="block";
+document.getElementById(id).classList.add("ativa");
 
 }
 
 
-function voltar(){
 
-document.querySelectorAll(".tela").forEach(e=>{
-e.style.display="none";
-});
+function comecar(){
 
-document.getElementById("inicio").style.display="block";
+trocar("identidade");
 
 }
+
+
+
+function validarCPF(cpf){
+
+cpf=cpf.replace(/\D/g,'');
+
+if(cpf.length!=11)return false;
+
+if(/^(\d)\1+$/.test(cpf))return false;
+
+
+let soma=0;
+
+for(let i=0;i<9;i++)
+soma+=cpf[i]*(10-i);
+
+
+let resto=(soma*10)%11;
+
+if(resto==10)resto=0;
+
+if(resto!=cpf[9])return false;
+
+
+
+soma=0;
+
+for(let i=0;i<10;i++)
+soma+=cpf[i]*(11-i);
+
+
+resto=(soma*10)%11;
+
+if(resto==10)resto=0;
+
+
+return resto==cpf[10];
+
+}
+
+
+
+
+function somErro(){
+
+let audio=document.getElementById("erro");
+
+audio.play().catch(()=>{});
+
+}
+
+
+
+
+function somSucesso(){
+
+let audio=document.getElementById("sucesso");
+
+audio.play().catch(()=>{});
+
+}
+
+
+
+
+function tremer(){
+
+let c=document.getElementById("card");
+
+c.classList.remove("shake");
+
+void c.offsetWidth;
+
+c.classList.add("shake");
+
+}
+
+
 
 
 function verificar(){
 
-let data=document.getElementById("data").value;
+let nome=document.getElementById("nome").value;
 
-if(!data){
-alert("Digite sua data de nascimento.");
-return;
-}
-
-let nascimento=new Date(data);
-let hoje=new Date();
-
-let idade=hoje.getFullYear()-nascimento.getFullYear();
-
-let mes=hoje.getMonth()-nascimento.getMonth();
-
-if(mes<0 || (mes===0 && hoje.getDate()<nascimento.getDate())){
-idade--;
-}
-
+let cpf=document.getElementById("cpf").value;
 
 let resultado=document.getElementById("resultado");
 
 
-if(idade>=18){
+
+if(nome.length<5 || !validarCPF(cpf)){
+
+
+tentativas--;
+
+document.getElementById("tentativas").innerHTML=
+"Tentativas restantes: "+tentativas;
+
 
 resultado.innerHTML=
-"✅ Acesso permitido.<br>Idade identificada: "+idade+" anos.";
+"<div class='erro'>REPROVADO</div>";
+
+
+tremer();
+
+somErro();
+
+
+
+if(tentativas<=0){
+
+resultado.innerHTML=
+"<div class='erro'>ACESSO BLOQUEADO</div>";
+
+}
+
+return;
+
+}
+
+
+
+
+resultado.innerHTML=
+"<div class='ok'>IDENTIDADE CONFIRMADA</div>";
+
+
+somSucesso();
+
+
+
+setTimeout(()=>{
+
+trocar("idade");
+
+},1200);
+
+
+
+}
+
+
+
+
+
+function verificarIdade(){
+
+let data=document.getElementById("data").value;
+
+
+if(!data)return;
+
+
+let nasc=new Date(data);
+
+let hoje=new Date();
+
+
+let idade=
+hoje.getFullYear()-nasc.getFullYear();
+
+
+
+let mes=
+hoje.getMonth()-nasc.getMonth();
+
+
+if(mes<0 || (mes==0 && hoje.getDate()<nasc.getDate()))
+idade--;
+
+
+
+if(idade>=18){
+
+document.getElementById("resultadoIdade").innerHTML=
+"<div class='ok'>ACESSO PERMITIDO</div>";
+
+somSucesso();
+
+
+setTimeout(()=>{
+
+trocar("riscos");
+
+},1200);
+
+
 
 }else{
 
-resultado.innerHTML=
-"❌ Acesso bloqueado.<br>É necessário ter 18 anos ou mais.";
+
+document.getElementById("resultadoIdade").innerHTML=
+"<div class='erro'>ACESSO NEGADO</div>";
+
+tremer();
+
+somErro();
+
 
 }
 
+
+
 }
+
+
+
+
+
+function finalizar(){
+
+trocar("final");
+
+}
+
+
 
 </script>
+
 
 </body>
 </html>

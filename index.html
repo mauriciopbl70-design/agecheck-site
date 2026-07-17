@@ -1,156 +1,380 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AgeCheck 2.0</title>
+<title>AgeCheck</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
 
 <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-text-align:center;
+    min-height:100vh;
+    background:#06140F;
+    color:#E8E3D8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'PT Sans', sans-serif;
 }
 
-header{
-background:#2563eb;
-padding:30px;
+.container{
+    width:90%;
+    max-width:430px;
+    background:#0B1712;
+    padding:35px;
+    border-radius:18px;
+    border:1px solid #1F5A45;
+    text-align:center;
+    box-shadow:0 0 30px rgba(31,90,69,0.4);
 }
 
-.card{
-background:white;
-color:black;
-width:85%;
-max-width:450px;
-margin:30px auto;
-padding:25px;
-border-radius:15px;
+.tela{
+    display:none;
+}
+
+.ativa{
+    display:block;
+}
+
+h1{
+    font-size:45px;
+    color:#F5B800;
+    font-family:'PT Sans', sans-serif;
+    font-style:italic;
+}
+
+h2{
+    margin-bottom:20px;
+    color:#F5B800;
+}
+
+p{
+    margin:15px 0;
+    font-size:18px;
 }
 
 input{
-width:90%;
-padding:10px;
-margin:8px;
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    background:#06140F;
+    color:#E8E3D8;
+    border:1px solid #1F5A45;
+    border-radius:8px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#F5B800;
 }
 
 button{
-background:#2563eb;
-color:white;
-border:0;
-padding:12px 25px;
-border-radius:10px;
-cursor:pointer;
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#F5B800;
+    color:#06140F;
+    font-weight:bold;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
 }
 
 button:hover{
-background:#1d4ed8;
+    transform:scale(1.04);
+    box-shadow:0 0 25px #F5B800;
 }
 
-#resultado{
-margin-top:20px;
-font-weight:bold;
+.reprovado{
+    margin-top:20px;
+    color:#ff3030;
+    font-family:'Poppins',sans-serif;
+    font-style:italic;
+    font-size:30px;
 }
 
-.info{
-padding:20px;
+.aprovado{
+    margin-top:20px;
+    color:#F5B800;
+    font-size:26px;
 }
+
 </style>
-
 </head>
 
 <body>
 
-<header>
-<h1>AgeCheck 2.0</h1>
-<p>Sistema inteligente de prevenção ao consumo de álcool por menores</p>
-</header>
+<div class="container">
 
+<div id="inicio" class="tela ativa">
 
-<div class="card">
+<h1>AgeCheck</h1>
 
-<h2>Verificação de idade</h2>
+<p>
+Informação e prevenção para escolhas mais conscientes.
+</p>
 
-<input id="nome" placeholder="Nome">
+<button onclick="abrirIdentidade()">
+COMEÇAR
+</button>
 
-<input type="date" id="nascimento">
+</div>
+  <div id="identidade" class="tela">
 
-<p>Enviar documento (simulação)</p>
+<h2>Verificação de identidade</h2>
 
-<input type="file" id="documento">
+<p>Digite seus dados para continuar</p>
 
+<input id="nome" type="text" placeholder="Nome completo">
 
-<p>Reconhecimento facial (simulação)</p>
+<input id="cpf" type="text" placeholder="CPF">
 
-<button onclick="verificar()">Iniciar análise</button>
+<p id="tentativas">
+Tentativas restantes: 3
+</p>
 
+<button onclick="verificarIdentidade()">
+VERIFICAR
+</button>
 
-<h3 id="resultado"></h3>
+<div id="resultado"></div>
 
 </div>
 
 
-<div class="info">
+<div id="idade" class="tela">
 
-<h2>Como funciona?</h2>
+<h2>Verificação de idade</h2>
+
+<p>Informe sua data de nascimento</p>
+
+<input id="dataNascimento" type="date">
+
+<button onclick="verificarIdade()">
+CONTINUAR
+</button>
+
+<div id="resultadoIdade"></div>
+
+</div>
+
+
+<div id="final" class="tela">
+
+<h1>Concluído</h1>
 
 <p>
-O AgeCheck utiliza múltiplas etapas de verificação
-para dificultar fraudes e auxiliar estabelecimentos
-na prevenção da venda de bebidas alcoólicas para menores.
+Obrigado por utilizar o sistema.
 </p>
+
+</div>
+
 
 </div>
 
 
 <script>
 
-function verificar(){
+let tentativas = 3;
+
+
+function trocarTela(tela){
+
+document.querySelectorAll(".tela").forEach(function(item){
+
+item.classList.remove("ativa");
+
+});
+
+document.getElementById(tela).classList.add("ativa");
+
+}
+
+
+
+function abrirIdentidade(){
+
+trocarTela("identidade");
+
+}
+
+
+
+// validação básica do CPF
+
+function validarCPF(cpf){
+
+cpf = cpf.replace(/\D/g,'');
+
+if(cpf.length !== 11){
+return false;
+}
+
+if(/^(\d)\1+$/.test(cpf)){
+return false;
+}
+
+let soma = 0;
+
+for(let i=0;i<9;i++){
+
+soma += Number(cpf.charAt(i)) * (10-i);
+
+}
+
+let resto = (soma*10)%11;
+
+if(resto===10){
+resto=0;
+}
+
+if(resto !== Number(cpf.charAt(9))){
+return false;
+}
+
+
+soma=0;
+
+for(let i=0;i<10;i++){
+
+soma += Number(cpf.charAt(i))*(11-i);
+
+}
+
+resto=(soma*10)%11;
+
+if(resto===10){
+resto=0;
+}
+
+return resto === Number(cpf.charAt(10));
+
+}
+
+
+
+function verificarIdentidade(){
 
 let nome=document.getElementById("nome").value;
-let nascimento=document.getElementById("nascimento").value;
-let documento=document.getElementById("documento").value;
 
+let cpf=document.getElementById("cpf").value;
 
-if(nome=="" || nascimento==""){
-document.getElementById("resultado").innerHTML=
-"⚠️ Preencha todos os dados.";
+let resultado=document.getElementById("resultado");
+
+if(nome.length < 5 || !validarCPF(cpf)){
+
+tentativas--;
+
+document.getElementById("tentativas").innerHTML =
+"";
+  document.getElementById("tentativas").innerHTML =
+"");
+
+if(tentativas > 0){
+
+document.getElementById("tentativas").innerHTML =
+"(" + tentativas + ") tentativas restantes";
+
+resultado.innerHTML =
+"<div class='reprovado'>REPROVADO</div>";
+
+}else{
+
+resultado.innerHTML =
+"<div class='reprovado'>ACESSO BLOQUEADO</div>";
+
+document.querySelector("#identidade button").disabled = true;
+
+}
+
 return;
-}
-
-
-let data=new Date(nascimento);
-let hoje=new Date();
-
-let idade=hoje.getFullYear()-data.getFullYear();
-
-
-if(idade>=18 && documento!=""){
-
-document.getElementById("resultado").innerHTML=
-"✅ Verificação aprovada<br>"+
-nome+" possui idade permitida.<br>"+
-"Documento analisado com sucesso.";
 
 }
 
-else if(idade>=18 && documento==""){
 
-document.getElementById("resultado").innerHTML=
-"⚠️ Idade permitida, porém falta confirmar documento.";
+resultado.innerHTML =
+"<div class='aprovado'>IDENTIDADE CONFIRMADA</div>";
 
-}
+setTimeout(function(){
 
-else{
+trocarTela("idade");
 
-document.getElementById("resultado").innerHTML=
-"❌ Acesso bloqueado.<br>"+
-"Usuário menor de idade.";
+},1500);
+
 
 }
 
+
+
+function verificarIdade(){
+
+let data =
+document.getElementById("dataNascimento").value;
+
+
+if(!data){
+
+return;
+
 }
+
+
+let nascimento =
+new Date(data);
+
+let hoje =
+new Date();
+
+
+let idade =
+hoje.getFullYear() -
+nascimento.getFullYear();
+
+
+let mes =
+hoje.getMonth() -
+nascimento.getMonth();
+
+
+if(mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())){
+
+idade--;
+
+}
+
+
+
+let resultado =
+document.getElementById("resultadoIdade");
+
+
+if(idade >= 18){
+
+resultado.innerHTML =
+"<div class='aprovado'>ACESSO PERMITIDO</div>";
+
+}else{
+
+resultado.innerHTML =
+"<div class='reprovado'>ACESSO NEGADO</div>";
+
+}
+
+
+}
+
 
 </script>
 

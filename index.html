@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AgeCheck</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,257 +15,532 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',Arial,sans-serif;
+font-family:'Poppins',sans-serif;
 }
 
+
 body{
+
 min-height:100vh;
 background:
-radial-gradient(circle at top,#1f5a45 0%,transparent 35%),
-linear-gradient(135deg,#030806,#06140F);
+radial-gradient(circle at top,#1f5a45,transparent 40%),
+linear-gradient(135deg,#020805,#06140F);
+
 display:flex;
 align-items:center;
 justify-content:center;
-color:#E8E3D8;
+
+color:#fff;
 overflow:hidden;
+
 }
 
-.particle{
+
+
+body::before{
+
+content:"";
 position:absolute;
-width:8px;
-height:8px;
+
+width:500px;
+height:500px;
+
 background:#F5B800;
-border-radius:50%;
-opacity:.4;
-animation:flutuar 8s infinite;
+
+filter:blur(180px);
+
+opacity:.12;
+
 }
 
-@keyframes flutuar{
-0%{
-transform:translateY(100vh);
-}
-100%{
-transform:translateY(-100vh);
-}
-}
+
 
 .card{
-width:90%;
-max-width:440px;
-background:rgba(11,23,18,.9);
+
+position:relative;
+
+width:92%;
+max-width:450px;
+
+background:rgba(10,20,15,.88);
+
 border:1px solid #1F5A45;
-border-radius:25px;
+
+border-radius:30px;
+
 padding:35px;
-text-align:center;
-box-shadow:0 0 40px #000;
+
+box-shadow:
+0 0 40px rgba(0,0,0,.7);
+
 backdrop-filter:blur(15px);
-animation:entrada .8s;
+
+overflow:hidden;
+
 }
 
-@keyframes entrada{
-from{
-opacity:0;
-transform:translateY(50px);
+
+
+.card::after{
+
+content:"";
+
+position:absolute;
+
+width:150px;
+height:150px;
+
+border-radius:50%;
+
+background:#F5B800;
+
+filter:blur(100px);
+
+right:-50px;
+bottom:-50px;
+
+opacity:.2;
+
 }
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
+
+
 
 .tela{
+
 display:none;
+
+animation:entrada .5s;
+
 }
+
+
 
 .ativa{
+
 display:block;
+
 }
+
+
+
+@keyframes entrada{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
 
 .logo{
+
 font-size:70px;
-margin-bottom:10px;
-animation:pulso 2s infinite;
+
+text-align:center;
+
+animation:pulsar 2s infinite;
+
 }
 
-@keyframes pulso{
+
+
+@keyframes pulsar{
+
 50%{
+
 transform:scale(1.1);
+
 }
+
 }
+
+
 
 h1{
+
+text-align:center;
+
 font-size:48px;
+
+font-weight:800;
+
 color:#F5B800;
-font-style:italic;
+
 }
+
+
 
 h2{
+
+text-align:center;
+
 color:#F5B800;
+
 margin-bottom:15px;
+
 }
+
+
 
 p{
-margin:15px 0;
+
+text-align:center;
+
 line-height:1.5;
+
+color:#d8d8d8;
+
+margin:15px 0;
+
 }
+
+
+
+.progress{
+
+display:flex;
+
+gap:8px;
+
+margin:25px 0;
+
+}
+
+
+
+.barra{
+
+height:6px;
+
+flex:1;
+
+background:#24372e;
+
+border-radius:20px;
+
+}
+
+
+
+.barra.ativa{
+
+background:#F5B800;
+
+}
+
+
 
 button{
+
 width:100%;
+
 padding:15px;
+
 margin-top:15px;
-border:0;
-border-radius:12px;
+
+border:none;
+
+border-radius:15px;
+
 background:#F5B800;
+
 color:#06140F;
-font-size:17px;
-font-weight:bold;
+
+font-weight:800;
+
+font-size:16px;
+
 cursor:pointer;
+
 transition:.3s;
+
 }
+
+
 
 button:hover{
+
 transform:scale(1.04);
+
 box-shadow:0 0 25px #F5B800;
+
 }
+
+
 
 input{
+
 width:100%;
+
 padding:14px;
-margin-top:10px;
-border-radius:12px;
+
+margin-top:12px;
+
+background:#07110d;
+
 border:1px solid #1F5A45;
-background:#06140F;
+
+border-radius:12px;
+
 color:white;
+
 outline:none;
+
 }
+
+
 
 .status{
-font-size:13px;
+
+text-align:center;
+
+font-size:12px;
+
 color:#F5B800;
+
 margin-top:20px;
+
 }
+
+
 
 .resultado{
+
 margin-top:20px;
+
 padding:15px;
+
 border-radius:15px;
+
 background:#0005;
+
+text-align:center;
+
 }
+
+
 
 .ok{
+
 color:#F5B800;
-font-size:25px;
+
+font-size:22px;
+
 }
+
+
 
 .erro{
-color:#ff4444;
-font-size:25px;
+
+color:#ff4040;
+
+font-size:22px;
+
 }
 
-.shake{
-animation:shake .4s;
-}
-
-@keyframes shake{
-25%{transform:translateX(-10px)}
-50%{transform:translateX(10px)}
-75%{transform:translateX(-10px)}
-}
 
 </style>
+
 </head>
+
 
 <body>
 
-<div class="particle"></div>
-<div class="particle"></div>
-<div class="particle"></div>
 
-<div class="card" id="card">
+<div class="card">
+
 
 <div id="inicio" class="tela ativa">
 
+
 <div class="logo">🛡️</div>
+
 
 <h1>AgeCheck</h1>
 
+
 <p>
-Sistema educativo de conscientização e prevenção.
+Proteção, informação e conscientização em um único sistema.
 </p>
 
-<button onclick="trocar('identidade')">
-INICIAR
+
+<button onclick="iniciar()">
+
+INICIAR VERIFICAÇÃO
+
 </button>
 
+
 <div class="status">
-Sistema online • Proteção ativa
+
+● Sistema online
+
 </div>
+
+
 </div><div id="identidade" class="tela">
 
-<h2>Simulação de identidade</h2>
+<h2>Verificação</h2>
 
 <p>
-Esta etapa representa uma verificação educativa.
+Etapa 1 de 3 • Confirmação educativa
 </p>
+
+<div class="progress">
+
+<div class="barra ativa"></div>
+<div class="barra"></div>
+<div class="barra"></div>
+
+</div>
+
 
 <input id="nome" placeholder="Nome completo">
 
-<input id="cpf" placeholder="CPF (somente números)">
 
-<p id="tentativas">
-Tentativas restantes: 3
-</p>
+<input id="cpf" placeholder="CPF (simulação)">
+
 
 <button onclick="verificarIdentidade()">
-VERIFICAR
+
+ANALISAR DADOS
+
 </button>
 
-<div class="resultado" id="resultado"></div>
+
+<div class="resultado" id="resultado">
+
+Aguardando análise...
 
 </div>
+
+
+</div>
+
 
 
 
 <div id="idade" class="tela">
 
-<h2>Confirmação de idade</h2>
+
+<h2>Idade</h2>
+
 
 <p>
-Informe sua data de nascimento.
+Etapa 2 de 3 • Confirmação de nascimento
 </p>
 
-<input id="data" type="date">
+
+<div class="progress">
+
+<div class="barra ativa"></div>
+<div class="barra ativa"></div>
+<div class="barra"></div>
+
+</div>
+
+
+<input type="date" id="data">
+
 
 <button onclick="verificarIdade()">
+
 CONTINUAR
+
 </button>
 
-<div class="resultado" id="resultadoIdade"></div>
+
+<div class="resultado" id="resultadoIdade">
+
+Aguardando...
+
+</div>
+
 
 </div>
 
 
 
 
-<div id="riscos" class="tela">
 
-<h2>Informações importantes</h2>
+<div id="analise" class="tela">
+
+
+<div class="logo">
+
+🤖
+
+</div>
+
+
+<h2>Analisando...</h2>
+
 
 <p>
-🧠 O álcool pode afetar memória, atenção e desenvolvimento cerebral.
+
+O AgeCheck está processando as informações.
+
 </p>
 
-<p>
-❤️ O consumo excessivo pode prejudicar diversos órgãos.
-</p>
+
+<div class="resultado">
+
+<div id="textoAnalise">
+
+Iniciando sistema...
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div id="conscientizacao" class="tela">
+
+
+<h2>Conscientização</h2>
+
 
 <p>
-⚠️ A prevenção ajuda a fazer escolhas mais seguras.
+🧠 O consumo de álcool pode afetar o desenvolvimento cerebral.
 </p>
+
+
+<p>
+❤️ O excesso pode causar problemas de saúde.
+</p>
+
+
+<p>
+⚠️ Informação ajuda na prevenção.
+</p>
+
+
 
 <button onclick="finalizar()">
+
 FINALIZAR
+
 </button>
+
 
 </div>
 
@@ -273,37 +549,52 @@ FINALIZAR
 
 <div id="final" class="tela">
 
+
 <div class="logo">
+
 ✅
+
 </div>
+
 
 <h1>AgeCheck</h1>
 
+
 <p>
-Informação e conscientização ajudam a proteger vidas.
+
+Obrigado por utilizar o sistema.
+
+Conhecimento gera escolhas melhores.
+
 </p>
 
+
+
 <button onclick="reiniciar()">
+
 RECOMEÇAR
+
 </button>
 
-</div>
 
-
-</div>
-
+</div></div>
 
 
 <script>
 
-let tentativas=3;
+
+let tentativas = 3;
+
 
 
 function trocar(id){
 
 document.querySelectorAll(".tela").forEach(t=>{
+
 t.classList.remove("ativa");
+
 });
+
 
 document.getElementById(id).classList.add("ativa");
 
@@ -311,14 +602,24 @@ document.getElementById(id).classList.add("ativa");
 
 
 
+function iniciar(){
+
+trocar("identidade");
+
+}
+
+
+
 function reiniciar(){
 
-tentativas=3;
+tentativas = 3;
 
-document.getElementById("tentativas").innerHTML=
-"Tentativas restantes: 3";
+document.getElementById("resultado").innerHTML =
+"Aguardando análise...";
 
-document.getElementById("resultado").innerHTML="";
+document.getElementById("resultadoIdade").innerHTML =
+"Aguardando...";
+
 
 trocar("inicio");
 
@@ -328,99 +629,128 @@ trocar("inicio");
 
 function validarCPF(cpf){
 
-cpf=cpf.replace(/\D/g,'');
 
-if(cpf.length!==11)return false;
-
-if(/^(\d)\1+$/.test(cpf))return false;
+cpf = cpf.replace(/\D/g,'');
 
 
-let soma=0;
+if(cpf.length != 11){
 
-for(let i=0;i<9;i++){
-soma+=Number(cpf[i])*(10-i);
+return false;
+
 }
 
-let resto=(soma*10)%11;
 
-if(resto===10)resto=0;
+if(/^(\d)\1+$/.test(cpf)){
 
-if(resto!==Number(cpf[9]))return false;
+return false;
+
+}
+
+
+
+let soma = 0;
+
+
+for(let i=0;i<9;i++){
+
+soma += Number(cpf[i]) * (10-i);
+
+}
+
+
+let resto = (soma*10)%11;
+
+
+if(resto==10){
+
+resto=0;
+
+}
+
+
+if(resto != Number(cpf[9])){
+
+return false;
+
+}
+
 
 
 soma=0;
 
+
 for(let i=0;i<10;i++){
-soma+=Number(cpf[i])*(11-i);
+
+soma += Number(cpf[i])*(11-i);
+
 }
+
 
 resto=(soma*10)%11;
 
-if(resto===10)resto=0;
+
+if(resto==10){
+
+resto=0;
+
+}
 
 
-return resto===Number(cpf[10]);
+
+return resto == Number(cpf[10]);
+
 
 }
 
 
-
-function tremer(){
-
-let card=document.getElementById("card");
-
-card.classList.remove("shake");
-
-void card.offsetWidth;
-
-card.classList.add("shake");
-
-}
 
 
 
 function verificarIdentidade(){
 
+
 let nome=document.getElementById("nome").value;
 
 let cpf=document.getElementById("cpf").value;
 
+
 let resultado=document.getElementById("resultado");
 
 
-if(nome.length<5 || !validarCPF(cpf)){
+
+if(nome.length < 5 || !validarCPF(cpf)){
 
 
 tentativas--;
 
 
-document.getElementById("tentativas").innerHTML=
-"Tentativas restantes: "+tentativas;
-
-
 resultado.innerHTML=
-"<div class='erro'>❌ NÃO CONFIRMADO</div>";
 
+"<div class='erro'>❌ Dados não confirmados</div><br>Tentativas: "+tentativas;
 
-tremer();
 
 
 if(tentativas<=0){
 
 resultado.innerHTML=
-"<div class='erro'>ACESSO BLOQUEADO</div>";
+
+"<div class='erro'>🚫 Sistema bloqueado</div>";
 
 }
 
 
 return;
 
+
 }
 
 
 
+
 resultado.innerHTML=
-"<div class='ok'>✅ IDENTIDADE SIMULADA CONFIRMADA</div>";
+
+"<div class='ok'>✅ Verificação concluída</div>";
+
 
 
 setTimeout(()=>{
@@ -430,16 +760,25 @@ trocar("idade");
 },1200);
 
 
+
 }
+
 
 
 
 
 function verificarIdade(){
 
+
 let data=document.getElementById("data").value;
 
-if(!data)return;
+
+if(!data){
+
+return;
+
+}
+
 
 
 let nascimento=new Date(data);
@@ -447,15 +786,14 @@ let nascimento=new Date(data);
 let hoje=new Date();
 
 
-let idade=
-hoje.getFullYear()-nascimento.getFullYear();
+let idade = hoje.getFullYear() - nascimento.getFullYear();
 
 
-let mes=
-hoje.getMonth()-nascimento.getMonth();
+let mes = hoje.getMonth() - nascimento.getMonth();
 
 
-if(mes<0 || (mes===0 && hoje.getDate()<nascimento.getDate())){
+
+if(mes < 0 || (mes===0 && hoje.getDate()<nascimento.getDate())){
 
 idade--;
 
@@ -463,22 +801,53 @@ idade--;
 
 
 
-let resultado=
-document.getElementById("resultadoIdade");
+let resultado=document.getElementById("resultadoIdade");
+
 
 
 if(idade>=18){
 
 
 resultado.innerHTML=
-"<div class='ok'>✅ ACESSO PERMITIDO</div>";
+
+"<div class='ok'>✅ Idade confirmada</div>";
+
 
 
 setTimeout(()=>{
 
-trocar("riscos");
 
-},1200);
+trocar("analise");
+
+
+
+let texto=document.getElementById("textoAnalise");
+
+
+setTimeout(()=>{
+
+texto.innerHTML="🔍 Verificando informações...";
+
+},500);
+
+
+setTimeout(()=>{
+
+texto.innerHTML="🛡️ Sistema concluído.";
+
+},1500);
+
+
+
+setTimeout(()=>{
+
+trocar("conscientizacao");
+
+},2500);
+
+
+
+},1000);
 
 
 
@@ -486,26 +855,30 @@ trocar("riscos");
 
 
 resultado.innerHTML=
-"<div class='erro'>❌ ACESSO NEGADO</div>";
 
-tremer();
-
+"<div class='erro'>❌ Idade não permitida</div>";
 
 }
 
 
 }
+
 
 
 
 function finalizar(){
 
+
 trocar("final");
+
 
 }
 
 
+
 </script>
 
+
 </body>
+
 </html>

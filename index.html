@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,37 +10,90 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
+
 <style>
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+font-family:"Poppins",sans-serif;
 }
 
 
 body{
 
-min-height:100vh;
+height:100vh;
+
 background:
-radial-gradient(circle at top,#1f5a45,transparent 40%),
+radial-gradient(circle at 20% 20%,#1F5A45,transparent 30%),
+radial-gradient(circle at 80% 80%,#F5B80022,transparent 25%),
 linear-gradient(135deg,#020805,#06140F);
+
+color:white;
 
 display:flex;
 align-items:center;
 justify-content:center;
 
-color:#fff;
 overflow:hidden;
 
 }
 
 
+/* partículas */
+
+.particle{
+
+position:absolute;
+
+width:6px;
+height:6px;
+
+background:#F5B800;
+
+border-radius:50%;
+
+opacity:.5;
+
+animation:subir 12s linear infinite;
+
+}
+
+
+@keyframes subir{
+
+0%{
+
+transform:translateY(110vh) scale(.5);
+
+opacity:0;
+
+}
+
+50%{
+
+opacity:.8;
+
+}
+
+100%{
+
+transform:translateY(-20vh) scale(1.5);
+
+opacity:0;
+
+}
+
+}
+
+
+/* luz holográfica */
 
 body::before{
 
 content:"";
+
 position:absolute;
 
 width:500px;
@@ -49,31 +103,62 @@ background:#F5B800;
 
 filter:blur(180px);
 
-opacity:.12;
+opacity:.08;
+
+animation:luz 5s infinite alternate;
+
+}
+
+
+@keyframes luz{
+
+from{
+
+transform:scale(1);
+
+}
+
+to{
+
+transform:scale(1.3);
+
+}
 
 }
 
 
 
-.card{
+/* CONTAINER */
 
-position:relative;
+.container{
 
 width:92%;
-max-width:450px;
 
-background:rgba(10,20,15,.88);
+max-width:460px;
 
-border:1px solid #1F5A45;
+background:
 
-border-radius:30px;
+linear-gradient(
+145deg,
+rgba(255,255,255,.12),
+rgba(255,255,255,.03)
+);
+
+border:1px solid rgba(245,184,0,.3);
+
+border-radius:35px;
 
 padding:35px;
 
-box-shadow:
-0 0 40px rgba(0,0,0,.7);
+backdrop-filter:blur(20px);
 
-backdrop-filter:blur(15px);
+box-shadow:
+
+0 0 50px #000,
+
+inset 0 0 30px #ffffff08;
+
+position:relative;
 
 overflow:hidden;
 
@@ -81,38 +166,54 @@ overflow:hidden;
 
 
 
-.card::after{
+/* efeito vidro */
+
+.container::before{
 
 content:"";
 
 position:absolute;
 
-width:150px;
-height:150px;
+top:-100%;
 
-border-radius:50%;
+left:-100%;
 
-background:#F5B800;
+width:50%;
 
-filter:blur(100px);
+height:300%;
 
-right:-50px;
-bottom:-50px;
+background:white;
 
-opacity:.2;
+opacity:.05;
+
+transform:rotate(35deg);
+
+animation:vidro 6s infinite;
 
 }
 
 
+@keyframes vidro{
+
+to{
+
+left:150%;
+
+}
+
+}
+
+
+
+/* telas */
 
 .tela{
 
 display:none;
 
-animation:entrada .5s;
+animation:entrada .6s;
 
 }
-
 
 
 .ativa{
@@ -122,14 +223,13 @@ display:block;
 }
 
 
-
 @keyframes entrada{
 
 from{
 
 opacity:0;
 
-transform:translateY(30px);
+transform:translateY(40px) scale(.95);
 
 }
 
@@ -137,31 +237,40 @@ to{
 
 opacity:1;
 
+transform:translateY(0) scale(1);
+
+}
+
+}
+
+
+
+/* LOGO */
+
+.logo{
+
+font-size:80px;
+
+text-align:center;
+
+filter:drop-shadow(0 0 20px #F5B800);
+
+animation:logoAnim 3s infinite;
+
+}
+
+
+@keyframes logoAnim{
+
+0%,100%{
+
 transform:translateY(0);
 
 }
 
-}
-
-
-
-.logo{
-
-font-size:70px;
-
-text-align:center;
-
-animation:pulsar 2s infinite;
-
-}
-
-
-
-@keyframes pulsar{
-
 50%{
 
-transform:scale(1.1);
+transform:translateY(-12px);
 
 }
 
@@ -169,23 +278,369 @@ transform:scale(1.1);
 
 
 
-h1{
+.nome{
 
 text-align:center;
 
-font-size:48px;
+font-size:50px;
 
 font-weight:800;
 
+font-style:italic;
+
 color:#F5B800;
+
+text-shadow:
+
+0 0 15px #F5B800;
 
 }
 
 
 
-h2{
+/* carregamento */
+
+
+.loading-text{
 
 text-align:center;
+
+margin-top:20px;
+
+font-size:15px;
+
+color:#ddd;
+
+}
+
+
+
+.progress-box{
+
+width:100%;
+
+height:18px;
+
+background:#111;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin:25px 0;
+
+border:1px solid #1F5A45;
+
+}
+
+
+.progress{
+
+height:100%;
+
+width:0%;
+
+background:
+
+linear-gradient(
+90deg,
+#F5B800,
+#ffe98a
+);
+
+border-radius:20px;
+
+transition:.3s;
+
+}
+
+
+
+.percent{
+
+text-align:center;
+
+font-size:32px;
+
+font-weight:bold;
+
+}
+
+
+
+.protected{
+
+text-align:center;
+
+margin-top:15px;
+
+color:#F5B800;
+
+letter-spacing:3px;
+
+font-weight:bold;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+
+
+
+<div class="container">
+
+
+<div id="loading" class="tela ativa">
+
+
+<div class="logo">
+🛡️
+</div>
+
+
+<div class="nome">
+AgeCheck
+</div>
+
+
+<div class="loading-text" id="loadingText">
+
+Inicializando módulos...
+
+</div>
+
+
+<div class="progress-box">
+
+<div class="progress" id="progress"></div>
+
+</div>
+
+
+<div class="percent" id="percent">
+
+0%
+
+</div>
+
+
+<div class="protected">
+
+SISTEMA PROTEGIDO
+
+</div>
+
+
+</div>
+<!-- MENU PRINCIPAL -->
+
+<div id="menu" class="tela">
+
+
+<div class="top-status">
+
+<div>
+🟢 ONLINE
+</div>
+
+<div>
+AGECHECK 4.0
+</div>
+
+</div>
+
+
+
+<div class="logo small">
+
+🛡️
+
+</div>
+
+
+<div class="nome">
+
+AgeCheck
+
+</div>
+
+
+<p class="descricao">
+
+Sistema inteligente de conscientização,
+prevenção e informação.
+
+</p>
+
+
+
+
+<div class="cards">
+
+
+
+<div class="menu-card" onclick="abrirTela('verificacao')">
+
+<div class="icone">
+
+🔐
+
+</div>
+
+<div>
+
+<h2>
+
+VERIFICAÇÃO
+
+</h2>
+
+<p>
+
+Verifique identidade
+e idade.
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="menu-card" onclick="abrirTela('saude')">
+
+
+<div class="icone">
+
+🧠
+
+</div>
+
+
+<div>
+
+<h2>
+
+SAÚDE E PREVENÇÃO
+
+</h2>
+
+<p>
+
+Conheça os impactos
+do álcool.
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="menu-card" onclick="abrirTela('config')">
+
+
+<div class="icone">
+
+⚙️
+
+</div>
+
+
+<div>
+
+<h2>
+
+CONFIGURAÇÕES
+
+</h2>
+
+<p>
+
+Personalize sua experiência.
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="menu-card" onclick="abrirTela('ai')">
+
+
+<div class="icone">
+
+🤖
+
+</div>
+
+
+<div>
+
+<h2>
+
+AGECHECK AI
+
+</h2>
+
+<p>
+
+Tire dúvidas
+sobre o tema.
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<style>
+
+
+.top-status{
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:12px;
 
 color:#F5B800;
 
@@ -195,49 +650,419 @@ margin-bottom:15px;
 
 
 
-p{
+.small{
+
+font-size:50px;
+
+}
+
+
+
+.descricao{
 
 text-align:center;
 
-line-height:1.5;
+color:#ccc;
 
-color:#d8d8d8;
+margin:15px 0 25px;
 
-margin:15px 0;
+font-size:14px;
 
 }
 
 
 
-.progress{
+
+.cards{
 
 display:flex;
 
-gap:8px;
+flex-direction:column;
 
-margin:25px 0;
+gap:15px;
 
 }
 
 
 
-.barra{
 
-height:6px;
+.menu-card{
 
-flex:1;
+display:flex;
 
-background:#24372e;
+align-items:center;
+
+gap:18px;
+
+padding:18px;
+
+border-radius:22px;
+
+background:
+
+rgba(255,255,255,.08);
+
+border:1px solid rgba(245,184,0,.25);
+
+cursor:pointer;
+
+transition:.4s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+
+
+.menu-card::before{
+
+content:"";
+
+position:absolute;
+
+width:100px;
+
+height:100px;
+
+background:#F5B800;
+
+filter:blur(50px);
+
+opacity:0;
+
+transition:.4s;
+
+right:-20px;
+
+}
+
+
+
+.menu-card:hover{
+
+transform:
+
+translateY(-5px)
+scale(1.03);
+
+box-shadow:
+
+0 0 25px #F5B80055;
+
+}
+
+
+
+.menu-card:hover::before{
+
+opacity:.5;
+
+}
+
+
+
+.icone{
+
+font-size:40px;
+
+}
+
+
+
+.menu-card h2{
+
+font-size:17px;
+
+color:#F5B800;
+
+}
+
+
+
+.menu-card p{
+
+font-size:12px;
+
+color:#ddd;
+
+margin-top:5px;
+
+}
+
+
+
+</style>
+<!-- VERIFICAÇÃO -->
+
+
+<div id="verificacao" class="tela">
+
+
+<div class="voltar" onclick="voltarMenu()">
+
+← Voltar
+
+</div>
+
+
+
+<div class="logo">
+
+🔐
+
+</div>
+
+
+
+<h2>
+
+Verificação
+
+</h2>
+
+
+
+<p>
+
+Etapa de confirmação educativa
+
+</p>
+
+
+
+
+<div class="scanner">
+
+
+<div class="scan-line"></div>
+
+
+<div class="scan-icon">
+
+🪪
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="status-box">
+
+
+<div>
+
+🟢 Sistema conectado
+
+</div>
+
+
+<div>
+
+🔍 Análise de dados
+
+</div>
+
+
+<div>
+
+🛡️ Proteção ativa
+
+</div>
+
+
+
+</div>
+
+
+
+
+<input id="nome"
+placeholder="Nome completo">
+
+
+
+<input id="cpf"
+placeholder="CPF (simulação)">
+
+
+
+<button onclick="analisarDados()">
+
+INICIAR ANÁLISE
+
+</button>
+
+
+
+<div id="analiseResultado" class="resultado">
+
+Aguardando informações...
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<style>
+
+
+.voltar{
+
+color:#F5B800;
+
+cursor:pointer;
+
+margin-bottom:20px;
+
+font-weight:bold;
+
+}
+
+
+
+.scanner{
+
+height:180px;
+
+width:180px;
+
+margin:25px auto;
+
+border-radius:50%;
+
+border:2px solid #F5B800;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:
+
+0 0 30px #F5B80055;
+
+}
+
+
+
+.scan-icon{
+
+font-size:65px;
+
+}
+
+
+
+.scan-line{
+
+position:absolute;
+
+width:100%;
+
+height:4px;
+
+background:#F5B800;
+
+top:0;
+
+animation:scan 2s infinite;
+
+box-shadow:
+
+0 0 15px #F5B800;
+
+}
+
+
+
+@keyframes scan{
+
+
+0%{
+
+top:0;
+
+}
+
+
+50%{
+
+top:100%;
+
+}
+
+
+100%{
+
+top:0;
+
+}
+
+
+}
+
+
+
+
+
+.status-box{
+
+background:#0005;
 
 border-radius:20px;
 
+padding:15px;
+
+margin:20px 0;
+
+font-size:13px;
+
+line-height:2;
+
+border:1px solid #1F5A45;
+
 }
 
 
 
-.barra.ativa{
 
-background:#F5B800;
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin:8px 0;
+
+background:#06140F;
+
+border:
+
+1px solid #1F5A45;
+
+border-radius:15px;
+
+color:white;
+
+outline:none;
 
 }
 
@@ -257,11 +1082,11 @@ border-radius:15px;
 
 background:#F5B800;
 
-color:#06140F;
-
-font-weight:800;
+font-weight:bold;
 
 font-size:16px;
+
+color:#06140F;
 
 cursor:pointer;
 
@@ -275,45 +1100,12 @@ button:hover{
 
 transform:scale(1.04);
 
-box-shadow:0 0 25px #F5B800;
+box-shadow:
+
+0 0 25px #F5B800;
 
 }
 
-
-
-input{
-
-width:100%;
-
-padding:14px;
-
-margin-top:12px;
-
-background:#07110d;
-
-border:1px solid #1F5A45;
-
-border-radius:12px;
-
-color:white;
-
-outline:none;
-
-}
-
-
-
-.status{
-
-text-align:center;
-
-font-size:12px;
-
-color:#F5B800;
-
-margin-top:20px;
-
-}
 
 
 
@@ -321,11 +1113,11 @@ margin-top:20px;
 
 margin-top:20px;
 
-padding:15px;
+background:#0005;
 
 border-radius:15px;
 
-background:#0005;
+padding:15px;
 
 text-align:center;
 
@@ -333,150 +1125,556 @@ text-align:center;
 
 
 
-.ok{
+</style>
+
+
+<!-- SAÚDE E PREVENÇÃO -->
+
+
+<div id="saude" class="tela">
+
+
+<div class="voltar" onclick="voltarMenu()">
+
+← Voltar
+
+</div>
+
+
+
+<div class="logo">
+
+🧠
+
+</div>
+
+
+
+<h2>
+
+Saúde e Prevenção
+
+</h2>
+
+
+
+<p class="sub">
+
+Informação é uma ferramenta de proteção.
+
+</p>
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+🧬 Desenvolvimento cerebral
+
+</h3>
+
+
+<p>
+
+Durante a adolescência, o cérebro ainda está em processo de desenvolvimento.
+O consumo de álcool pode afetar áreas responsáveis pela memória,
+atenção, aprendizado e controle de decisões.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+❤️ Impactos no organismo
+
+</h3>
+
+
+<p>
+
+O álcool pode afetar diferentes partes do corpo.
+O consumo frequente ou excessivo pode aumentar riscos para órgãos
+como fígado, coração e sistema nervoso.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="info-card">
+
+
+<h3>
+
+⚠️ Prevenção e escolhas conscientes
+
+</h3>
+
+
+<p>
+
+A prevenção começa com conhecimento.
+Ter acesso a informações confiáveis ajuda a compreender riscos
+e tomar decisões mais seguras.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="timeline">
+
+
+<div>
+
+📚 Informação
+
+</div>
+
+
+↓
+
+<div>
+
+🧠 Consciência
+
+</div>
+
+
+↓
+
+<div>
+
+🛡️ Prevenção
+
+</div>
+
+
+↓
+
+<div>
+
+✨ Escolhas melhores
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CONFIGURAÇÕES -->
+
+
+<div id="config" class="tela">
+
+
+<div class="voltar" onclick="voltarMenu()">
+
+← Voltar
+
+</div>
+
+
+
+<div class="logo">
+
+⚙️
+
+</div>
+
+
+
+<h2>
+
+Configurações
+
+</h2>
+
+
+
+
+<div class="config-card">
+
+
+<label>
+
+🔊 Volume
+
+</label>
+
+
+<input type="range" min="0" max="100" value="70">
+
+
+</div>
+
+
+
+
+
+<div class="config-card">
+
+
+<label>
+
+☀️ Brilho
+
+</label>
+
+
+<input type="range" min="0" max="100" value="80">
+
+
+</div>
+
+
+
+
+
+<div class="config-card">
+
+
+<label>
+
+🎵 Música de fundo
+
+</label>
+
+
+
+<div class="switch">
+
+<input type="checkbox" checked>
+
+<span></span>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="config-card">
+
+
+<label>
+
+✨ Intensidade das animações
+
+</label>
+
+
+
+<select>
+
+
+<option>
+
+Baixa
+
+</option>
+
+
+<option selected>
+
+Média
+
+</option>
+
+
+<option>
+
+Alta
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="config-card">
+
+
+<label>
+
+🌌 Efeitos visuais
+
+</label>
+
+
+
+<select>
+
+
+<option>
+
+Ativado
+
+</option>
+
+
+<option>
+
+Economia de desempenho
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<button onclick="restaurar()">
+
+🔄 Restaurar padrão
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<style>
+
+
+.sub{
+
+color:#ccc;
+
+}
+
+
+
+.info-card{
+
+background:
+
+rgba(255,255,255,.08);
+
+border:1px solid #1F5A45;
+
+border-radius:20px;
+
+padding:18px;
+
+margin:15px 0;
+
+transition:.4s;
+
+}
+
+
+
+.info-card:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+
+0 0 20px #F5B80055;
+
+}
+
+
+
+.info-card h3{
 
 color:#F5B800;
 
-font-size:22px;
+margin-bottom:10px;
+
+font-size:17px;
 
 }
 
 
 
-.erro{
+.info-card p{
 
-color:#ff4040;
+font-size:13px;
 
-font-size:22px;
+color:#ddd;
+
+line-height:1.6;
 
 }
+
+
+
+
+
+.timeline{
+
+margin-top:25px;
+
+background:#0005;
+
+border-radius:20px;
+
+padding:20px;
+
+text-align:center;
+
+line-height:2;
+
+color:#F5B800;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+.config-card{
+
+background:
+
+rgba(255,255,255,.08);
+
+border:1px solid #1F5A45;
+
+border-radius:18px;
+
+padding:18px;
+
+margin:15px 0;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+
+
+.config-card label{
+
+color:#F5B800;
+
+font-weight:bold;
+
+}
+
+
+
+input[type="range"]{
+
+accent-color:#F5B800;
+
+}
+
+
+
+select{
+
+padding:12px;
+
+border-radius:12px;
+
+background:#06140F;
+
+color:white;
+
+border:1px solid #1F5A45;
+
+}
+
+
+
+
+.switch input{
+
+width:50px;
+
+height:25px;
+
+accent-color:#F5B800;
+
+}
+
 
 
 </style>
+  <!-- MÚSICA DE FUNDO -->
 
-</head>
+<audio id="musica" loop>
 
+<source src="musica.mp3" type="audio/mpeg">
 
-<body>
-
-
-<div class="card">
-
-
-<div id="inicio" class="tela ativa">
+</audio>
 
 
-<div class="logo">🛡️</div>
 
 
-<h1>AgeCheck</h1>
+
+<!-- AGECHECK AI -->
 
 
-<p>
-Proteção, informação e conscientização em um único sistema.
-</p>
+<div id="ai" class="tela">
 
 
-<button onclick="iniciar()">
+<div class="voltar" onclick="voltarMenu()">
 
-INICIAR VERIFICAÇÃO
-
-</button>
-
-
-<div class="status">
-
-● Sistema online
+← Voltar
 
 </div>
 
-
-</div><div id="identidade" class="tela">
-
-<h2>Verificação</h2>
-
-<p>
-Etapa 1 de 3 • Confirmação educativa
-</p>
-
-<div class="progress">
-
-<div class="barra ativa"></div>
-<div class="barra"></div>
-<div class="barra"></div>
-
-</div>
-
-
-<input id="nome" placeholder="Nome completo">
-
-
-<input id="cpf" placeholder="CPF (simulação)">
-
-
-<button onclick="verificarIdentidade()">
-
-ANALISAR DADOS
-
-</button>
-
-
-<div class="resultado" id="resultado">
-
-Aguardando análise...
-
-</div>
-
-
-</div>
-
-
-
-
-<div id="idade" class="tela">
-
-
-<h2>Idade</h2>
-
-
-<p>
-Etapa 2 de 3 • Confirmação de nascimento
-</p>
-
-
-<div class="progress">
-
-<div class="barra ativa"></div>
-<div class="barra ativa"></div>
-<div class="barra"></div>
-
-</div>
-
-
-<input type="date" id="data">
-
-
-<button onclick="verificarIdade()">
-
-CONTINUAR
-
-</button>
-
-
-<div class="resultado" id="resultadoIdade">
-
-Aguardando...
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div id="analise" class="tela">
 
 
 <div class="logo">
@@ -486,58 +1684,83 @@ Aguardando...
 </div>
 
 
-<h2>Analisando...</h2>
+
+<h2>
+
+AgeCheck AI
+
+</h2>
+
 
 
 <p>
 
-O AgeCheck está processando as informações.
+Assistente educativo inteligente.
 
 </p>
 
 
-<div class="resultado">
 
-<div id="textoAnalise">
 
-Iniciando sistema...
+<div class="chat" id="chat">
+
+
+<div class="bot msg">
+
+🤖 Olá! Eu sou o AgeCheck AI.
+<br><br>
+Posso responder dúvidas sobre
+saúde, prevenção e informações.
 
 </div>
 
-</div>
-
 
 </div>
 
 
 
 
+<div class="digitando" id="digitando">
 
-<div id="conscientizacao" class="tela">
+🤖 Digitando...
 
+<span>●</span>
+<span>●</span>
+<span>●</span>
 
-<h2>Conscientização</h2>
-
-
-<p>
-🧠 O consumo de álcool pode afetar o desenvolvimento cerebral.
-</p>
-
-
-<p>
-❤️ O excesso pode causar problemas de saúde.
-</p>
-
-
-<p>
-⚠️ Informação ajuda na prevenção.
-</p>
+</div>
 
 
 
-<button onclick="finalizar()">
 
-FINALIZAR
+
+<div class="perguntas">
+
+
+<button onclick="perguntar('riscos')">
+
+⚠️ Quais são os riscos?
+
+</button>
+
+
+<button onclick="perguntar('idade')">
+
+🔞 Por que existe limite de idade?
+
+</button>
+
+
+<button onclick="perguntar('prevencao')">
+
+🛡️ Como funciona a prevenção?
+
+</button>
+
+
+<button onclick="perguntar('saude')">
+
+🧠 Como cuidar da saúde?
 
 </button>
 
@@ -547,47 +1770,194 @@ FINALIZAR
 
 
 
-<div id="final" class="tela">
+<input id="mensagem" placeholder="Digite uma pergunta...">
 
 
-<div class="logo">
+<button onclick="enviarMensagem()">
 
-✅
-
-</div>
-
-
-<h1>AgeCheck</h1>
-
-
-<p>
-
-Obrigado por utilizar o sistema.
-
-Conhecimento gera escolhas melhores.
-
-</p>
-
-
-
-<button onclick="reiniciar()">
-
-RECOMEÇAR
+ENVIAR
 
 </button>
 
 
-</div></div>
+
+</div>
+
+
+
+
+
+<style>
+
+
+.chat{
+
+height:250px;
+
+overflow-y:auto;
+
+padding:10px;
+
+background:#0005;
+
+border-radius:20px;
+
+}
+
+
+
+.msg{
+
+max-width:85%;
+
+padding:15px;
+
+margin:10px 0;
+
+border-radius:20px;
+
+font-size:14px;
+
+}
+
+
+
+.bot{
+
+background:#1F5A45;
+
+border:1px solid #F5B800;
+
+}
+
+
+
+.user{
+
+background:#F5B800;
+
+color:#06140F;
+
+margin-left:auto;
+
+}
+
+
+
+.digitando{
+
+display:none;
+
+color:#F5B800;
+
+font-size:13px;
+
+margin:10px;
+
+}
+
+
+
+.digitando span{
+
+animation:pontos 1s infinite;
+
+}
+
+
+
+@keyframes pontos{
+
+50%{
+
+opacity:.2;
+
+}
+
+}
+
+
+
+.perguntas button{
+
+font-size:12px;
+
+padding:10px;
+
+}
+
+
+
+</style>
+
+
+
+
 
 
 <script>
 
 
-let tentativas = 3;
+/* CARREGAMENTO */
+
+
+let valor=0;
+
+
+let carregamento=setInterval(()=>{
+
+
+valor++;
+
+
+document.getElementById("progress").style.width=
+valor+"%";
+
+
+document.getElementById("percent").innerHTML=
+valor+"%";
 
 
 
-function trocar(id){
+let textos=[
+
+"Inicializando módulos...",
+
+"Carregando segurança...",
+
+"Preparando ambiente...",
+
+"Ativando proteção..."
+
+];
+
+
+document.getElementById("loadingText").innerHTML=
+textos[Math.floor(valor/25)%4];
+
+
+
+if(valor>=100){
+
+
+clearInterval(carregamento);
+
+
+trocarTela("menu");
+
+
+}
+
+
+},40);
+
+
+
+
+
+
+function trocarTela(id){
+
 
 document.querySelectorAll(".tela").forEach(t=>{
 
@@ -598,107 +1968,6 @@ t.classList.remove("ativa");
 
 document.getElementById(id).classList.add("ativa");
 
-}
-
-
-
-function iniciar(){
-
-trocar("identidade");
-
-}
-
-
-
-function reiniciar(){
-
-tentativas = 3;
-
-document.getElementById("resultado").innerHTML =
-"Aguardando análise...";
-
-document.getElementById("resultadoIdade").innerHTML =
-"Aguardando...";
-
-
-trocar("inicio");
-
-}
-
-
-
-function validarCPF(cpf){
-
-
-cpf = cpf.replace(/\D/g,'');
-
-
-if(cpf.length != 11){
-
-return false;
-
-}
-
-
-if(/^(\d)\1+$/.test(cpf)){
-
-return false;
-
-}
-
-
-
-let soma = 0;
-
-
-for(let i=0;i<9;i++){
-
-soma += Number(cpf[i]) * (10-i);
-
-}
-
-
-let resto = (soma*10)%11;
-
-
-if(resto==10){
-
-resto=0;
-
-}
-
-
-if(resto != Number(cpf[9])){
-
-return false;
-
-}
-
-
-
-soma=0;
-
-
-for(let i=0;i<10;i++){
-
-soma += Number(cpf[i])*(11-i);
-
-}
-
-
-resto=(soma*10)%11;
-
-
-if(resto==10){
-
-resto=0;
-
-}
-
-
-
-return resto == Number(cpf[10]);
-
 
 }
 
@@ -706,37 +1975,71 @@ return resto == Number(cpf[10]);
 
 
 
-function verificarIdentidade(){
+
+function abrirTela(id){
+
+trocarTela(id);
+
+}
+
+
+
+
+
+
+function voltarMenu(){
+
+trocarTela("menu");
+
+}
+
+
+
+
+
+
+
+/* MÚSICA */
+
+
+let musica=document.getElementById("musica");
+
+
+musica.volume=.25;
+
+
+
+function iniciarMusica(){
+
+musica.play().catch(()=>{});
+
+}
+
+
+
+
+
+
+
+/* VERIFICAÇÃO */
+
+
+function analisarDados(){
+
 
 
 let nome=document.getElementById("nome").value;
 
-let cpf=document.getElementById("cpf").value;
 
-
-let resultado=document.getElementById("resultado");
+let resultado=document.getElementById("analiseResultado");
 
 
 
-if(nome.length < 5 || !validarCPF(cpf)){
-
-
-tentativas--;
+if(nome.length<3){
 
 
 resultado.innerHTML=
-
-"<div class='erro'>❌ Dados não confirmados</div><br>Tentativas: "+tentativas;
-
-
-
-if(tentativas<=0){
-
-resultado.innerHTML=
-
-"<div class='erro'>🚫 Sistema bloqueado</div>";
-
-}
+"❌ Informe um nome válido";
 
 
 return;
@@ -746,119 +2049,154 @@ return;
 
 
 
-
 resultado.innerHTML=
-
-"<div class='ok'>✅ Verificação concluída</div>";
+"🔍 Analisando informações...";
 
 
 
 setTimeout(()=>{
-
-trocar("idade");
-
-},1200);
-
-
-
-}
-
-
-
-
-
-function verificarIdade(){
-
-
-let data=document.getElementById("data").value;
-
-
-if(!data){
-
-return;
-
-}
-
-
-
-let nascimento=new Date(data);
-
-let hoje=new Date();
-
-
-let idade = hoje.getFullYear() - nascimento.getFullYear();
-
-
-let mes = hoje.getMonth() - nascimento.getMonth();
-
-
-
-if(mes < 0 || (mes===0 && hoje.getDate()<nascimento.getDate())){
-
-idade--;
-
-}
-
-
-
-let resultado=document.getElementById("resultadoIdade");
-
-
-
-if(idade>=18){
 
 
 resultado.innerHTML=
+"🟢 Processo concluído com sucesso";
 
-"<div class='ok'>✅ Idade confirmada</div>";
+
+},2000);
+
+
+
+}
+
+
+
+
+
+
+
+/* CONFIG */
+
+
+function restaurar(){
+
+
+alert("Configurações restauradas!");
+
+
+
+}
+
+
+
+
+
+
+
+/* AI */
+
+
+function adicionarMensagem(texto,tipo){
+
+
+let chat=document.getElementById("chat");
+
+
+let div=document.createElement("div");
+
+
+div.className="msg "+tipo;
+
+
+div.innerHTML=texto;
+
+
+chat.appendChild(div);
+
+
+chat.scrollTop=chat.scrollHeight;
+
+
+}
+
+
+
+
+
+
+function perguntar(tipo){
+
+
+
+let respostas={
+
+
+
+riscos:
+
+"O álcool pode afetar memória, atenção e órgãos importantes do corpo. A informação ajuda na prevenção.",
+
+
+
+idade:
+
+"O limite de idade existe para proteger o desenvolvimento e reduzir riscos à saúde.",
+
+
+
+prevencao:
+
+"A prevenção acontece através de educação, informação e escolhas conscientes.",
+
+
+
+saude:
+
+"Cuidar da saúde envolve hábitos positivos, informação e prevenção."
+
+
+
+};
+
+
+
+mostrarDigitando();
 
 
 
 setTimeout(()=>{
 
 
-trocar("analise");
+adicionarMensagem(
+"🤖 "+respostas[tipo],
+"bot"
+);
 
-
-
-let texto=document.getElementById("textoAnalise");
-
-
-setTimeout(()=>{
-
-texto.innerHTML="🔍 Verificando informações...";
-
-},500);
-
-
-setTimeout(()=>{
-
-texto.innerHTML="🛡️ Sistema concluído.";
 
 },1500);
 
 
 
+}
+
+
+
+
+
+
+function mostrarDigitando(){
+
+let d=document.getElementById("digitando");
+
+
+d.style.display="block";
+
+
 setTimeout(()=>{
 
-trocar("conscientizacao");
 
-},2500);
-
+d.style.display="none";
 
 
-},1000);
-
-
-
-}else{
-
-
-resultado.innerHTML=
-
-"<div class='erro'>❌ Idade não permitida</div>";
-
-}
+},1400);
 
 
 }
@@ -866,13 +2204,50 @@ resultado.innerHTML=
 
 
 
-function finalizar(){
 
 
-trocar("final");
+
+function enviarMensagem(){
+
+
+let input=document.getElementById("mensagem");
+
+
+let texto=input.value;
+
+
+if(texto=="")return;
+
+
+
+adicionarMensagem(texto,"user");
+
+
+input.value="";
+
+
+
+mostrarDigitando();
+
+
+
+setTimeout(()=>{
+
+
+adicionarMensagem(
+"🤖 Obrigado pela pergunta. Procure sempre informações confiáveis sobre saúde e prevenção.",
+"bot"
+);
+
+
+
+},1500);
+
 
 
 }
+
+
 
 
 

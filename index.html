@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AgeCheck 3.0</title>
+<title>AgeCheck</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,56 +14,57 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Poppins',Arial,sans-serif;
 }
 
 body{
-height:100vh;
-background:#06140F;
+min-height:100vh;
+background:
+radial-gradient(circle at top,#1f5a45 0%,transparent 35%),
+linear-gradient(135deg,#030806,#06140F);
 display:flex;
 align-items:center;
 justify-content:center;
 color:#E8E3D8;
-font-family:Arial,sans-serif;
 overflow:hidden;
 }
 
-body::before{
-content:"";
+.particle{
 position:absolute;
-width:400px;
-height:400px;
-background:#1F5A45;
-filter:blur(120px);
-opacity:.3;
+width:8px;
+height:8px;
+background:#F5B800;
+border-radius:50%;
+opacity:.4;
+animation:flutuar 8s infinite;
+}
+
+@keyframes flutuar{
+0%{
+transform:translateY(100vh);
+}
+100%{
+transform:translateY(-100vh);
+}
 }
 
 .card{
-position:relative;
 width:90%;
-max-width:430px;
-background:rgba(11,23,18,.85);
-backdrop-filter:blur(10px);
-padding:35px;
-border-radius:20px;
+max-width:440px;
+background:rgba(11,23,18,.9);
 border:1px solid #1F5A45;
+border-radius:25px;
+padding:35px;
 text-align:center;
-box-shadow:0 0 30px rgba(31,90,69,.5);
-transition:.4s;
-}
-
-.tela{
-display:none;
-animation:entrada .5s;
-}
-
-.ativa{
-display:block;
+box-shadow:0 0 40px #000;
+backdrop-filter:blur(15px);
+animation:entrada .8s;
 }
 
 @keyframes entrada{
 from{
 opacity:0;
-transform:translateY(30px);
+transform:translateY(50px);
 }
 to{
 opacity:1;
@@ -71,11 +72,30 @@ transform:translateY(0);
 }
 }
 
+.tela{
+display:none;
+}
+
+.ativa{
+display:block;
+}
+
+.logo{
+font-size:70px;
+margin-bottom:10px;
+animation:pulso 2s infinite;
+}
+
+@keyframes pulso{
+50%{
+transform:scale(1.1);
+}
+}
+
 h1{
-font-family:"PT Sans";
-font-style:italic;
-font-size:50px;
+font-size:48px;
 color:#F5B800;
+font-style:italic;
 }
 
 h2{
@@ -85,69 +105,60 @@ margin-bottom:15px;
 
 p{
 margin:15px 0;
-}
-
-input{
-width:100%;
-padding:14px;
-margin:8px 0;
-border-radius:10px;
-border:1px solid #1F5A45;
-background:#06140F;
-color:white;
+line-height:1.5;
 }
 
 button{
 width:100%;
 padding:15px;
 margin-top:15px;
-border:none;
-border-radius:10px;
+border:0;
+border-radius:12px;
 background:#F5B800;
 color:#06140F;
+font-size:17px;
 font-weight:bold;
-font-size:18px;
 cursor:pointer;
-position:relative;
-overflow:hidden;
+transition:.3s;
 }
 
 button:hover{
+transform:scale(1.04);
 box-shadow:0 0 25px #F5B800;
-transform:scale(1.03);
 }
 
-button::after{
-content:"";
-position:absolute;
-top:0;
-left:-100%;
-width:50%;
-height:100%;
-background:white;
-opacity:.3;
-transform:skewX(-25deg);
-animation:brilho 3s infinite;
+input{
+width:100%;
+padding:14px;
+margin-top:10px;
+border-radius:12px;
+border:1px solid #1F5A45;
+background:#06140F;
+color:white;
+outline:none;
 }
 
-@keyframes brilho{
-100%{
-left:150%;
-}
+.status{
+font-size:13px;
+color:#F5B800;
+margin-top:20px;
 }
 
-.erro{
-color:#ff3030;
-font-family:"Poppins";
-font-style:italic;
-font-size:28px;
-margin-top:15px;
+.resultado{
+margin-top:20px;
+padding:15px;
+border-radius:15px;
+background:#0005;
 }
 
 .ok{
 color:#F5B800;
 font-size:25px;
-margin-top:15px;
+}
+
+.erro{
+color:#ff4444;
+font-size:25px;
 }
 
 .shake{
@@ -155,72 +166,72 @@ animation:shake .4s;
 }
 
 @keyframes shake{
-
-0%{transform:translateX(0)}
-25%{transform:translateX(-12px)}
-50%{transform:translateX(12px)}
-75%{transform:translateX(-12px)}
-100%{transform:translateX(0)}
-
-}
-
-.card img{
-width:80px;
+25%{transform:translateX(-10px)}
+50%{transform:translateX(10px)}
+75%{transform:translateX(-10px)}
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
 
 <div class="card" id="card">
 
-
 <div id="inicio" class="tela ativa">
+
+<div class="logo">🛡️</div>
 
 <h1>AgeCheck</h1>
 
 <p>
-Sistema educativo de prevenção e conscientização sobre o consumo de álcool.
+Sistema educativo de conscientização e prevenção.
 </p>
 
-<button onclick="comecar()">
-COMEÇAR
+<button onclick="trocar('identidade')">
+INICIAR
 </button>
 
+<div class="status">
+Sistema online • Proteção ativa
 </div>
+</div><div id="identidade" class="tela">
 
+<h2>Simulação de identidade</h2>
 
-
-<div id="identidade" class="tela">
-
-<h2>Verificação de identidade</h2>
+<p>
+Esta etapa representa uma verificação educativa.
+</p>
 
 <input id="nome" placeholder="Nome completo">
 
-<input id="cpf" placeholder="CPF">
+<input id="cpf" placeholder="CPF (somente números)">
 
 <p id="tentativas">
 Tentativas restantes: 3
 </p>
 
-<button onclick="verificar()">
+<button onclick="verificarIdentidade()">
 VERIFICAR
 </button>
 
-<div id="resultado"></div>
+<div class="resultado" id="resultado"></div>
 
 </div>
 
 
 
-
 <div id="idade" class="tela">
 
-<h2>Verificação de idade</h2>
+<h2>Confirmação de idade</h2>
+
+<p>
+Informe sua data de nascimento.
+</p>
 
 <input id="data" type="date">
 
@@ -228,28 +239,27 @@ VERIFICAR
 CONTINUAR
 </button>
 
-<div id="resultadoIdade"></div>
+<div class="resultado" id="resultadoIdade"></div>
 
 </div>
 
 
 
 
-
 <div id="riscos" class="tela">
 
-<h2>Riscos para a saúde</h2>
+<h2>Informações importantes</h2>
 
 <p>
-🧠 Pode afetar memória, atenção e desenvolvimento cerebral.
+🧠 O álcool pode afetar memória, atenção e desenvolvimento cerebral.
 </p>
 
 <p>
-❤️ Pode prejudicar órgãos como coração e fígado.
+❤️ O consumo excessivo pode prejudicar diversos órgãos.
 </p>
 
 <p>
-⚠️ O consumo frequente pode aumentar riscos de dependência.
+⚠️ A prevenção ajuda a fazer escolhas mais seguras.
 </p>
 
 <button onclick="finalizar()">
@@ -263,34 +273,30 @@ FINALIZAR
 
 <div id="final" class="tela">
 
-<h1>Obrigado</h1>
+<div class="logo">
+✅
+</div>
+
+<h1>AgeCheck</h1>
 
 <p>
-Informação gera escolhas melhores.
+Informação e conscientização ajudam a proteger vidas.
 </p>
 
+<button onclick="reiniciar()">
+RECOMEÇAR
+</button>
+
 </div>
 
 
-
 </div>
 
-
-
-<audio id="erro">
-<source src="erro.mp3">
-</audio>
-
-<audio id="sucesso">
-<source src="sucesso.mp3">
-</audio>
 
 
 <script>
 
-
 let tentativas=3;
-
 
 
 function trocar(id){
@@ -305,9 +311,16 @@ document.getElementById(id).classList.add("ativa");
 
 
 
-function comecar(){
+function reiniciar(){
 
-trocar("identidade");
+tentativas=3;
+
+document.getElementById("tentativas").innerHTML=
+"Tentativas restantes: 3";
+
+document.getElementById("resultado").innerHTML="";
+
+trocar("inicio");
 
 }
 
@@ -317,81 +330,56 @@ function validarCPF(cpf){
 
 cpf=cpf.replace(/\D/g,'');
 
-if(cpf.length!=11)return false;
+if(cpf.length!==11)return false;
 
 if(/^(\d)\1+$/.test(cpf))return false;
 
 
 let soma=0;
 
-for(let i=0;i<9;i++)
-soma+=cpf[i]*(10-i);
-
+for(let i=0;i<9;i++){
+soma+=Number(cpf[i])*(10-i);
+}
 
 let resto=(soma*10)%11;
 
-if(resto==10)resto=0;
+if(resto===10)resto=0;
 
-if(resto!=cpf[9])return false;
-
+if(resto!==Number(cpf[9]))return false;
 
 
 soma=0;
 
-for(let i=0;i<10;i++)
-soma+=cpf[i]*(11-i);
-
+for(let i=0;i<10;i++){
+soma+=Number(cpf[i])*(11-i);
+}
 
 resto=(soma*10)%11;
 
-if(resto==10)resto=0;
+if(resto===10)resto=0;
 
 
-return resto==cpf[10];
-
-}
-
-
-
-
-function somErro(){
-
-let audio=document.getElementById("erro");
-
-audio.play().catch(()=>{});
+return resto===Number(cpf[10]);
 
 }
-
-
-
-
-function somSucesso(){
-
-let audio=document.getElementById("sucesso");
-
-audio.play().catch(()=>{});
-
-}
-
 
 
 
 function tremer(){
 
-let c=document.getElementById("card");
+let card=document.getElementById("card");
 
-c.classList.remove("shake");
+card.classList.remove("shake");
 
-void c.offsetWidth;
+void card.offsetWidth;
 
-c.classList.add("shake");
+card.classList.add("shake");
 
 }
 
 
 
-
-function verificar(){
+function verificarIdentidade(){
 
 let nome=document.getElementById("nome").value;
 
@@ -400,24 +388,21 @@ let cpf=document.getElementById("cpf").value;
 let resultado=document.getElementById("resultado");
 
 
-
 if(nome.length<5 || !validarCPF(cpf)){
 
 
 tentativas--;
+
 
 document.getElementById("tentativas").innerHTML=
 "Tentativas restantes: "+tentativas;
 
 
 resultado.innerHTML=
-"<div class='erro'>REPROVADO</div>";
+"<div class='erro'>❌ NÃO CONFIRMADO</div>";
 
 
 tremer();
-
-somErro();
-
 
 
 if(tentativas<=0){
@@ -427,19 +412,15 @@ resultado.innerHTML=
 
 }
 
+
 return;
 
 }
 
 
 
-
 resultado.innerHTML=
-"<div class='ok'>IDENTIDADE CONFIRMADA</div>";
-
-
-somSucesso();
-
+"<div class='ok'>✅ IDENTIDADE SIMULADA CONFIRMADA</div>";
 
 
 setTimeout(()=>{
@@ -449,9 +430,7 @@ trocar("idade");
 },1200);
 
 
-
 }
-
 
 
 
@@ -460,35 +439,39 @@ function verificarIdade(){
 
 let data=document.getElementById("data").value;
 
-
 if(!data)return;
 
 
-let nasc=new Date(data);
+let nascimento=new Date(data);
 
 let hoje=new Date();
 
 
 let idade=
-hoje.getFullYear()-nasc.getFullYear();
-
+hoje.getFullYear()-nascimento.getFullYear();
 
 
 let mes=
-hoje.getMonth()-nasc.getMonth();
+hoje.getMonth()-nascimento.getMonth();
 
 
-if(mes<0 || (mes==0 && hoje.getDate()<nasc.getDate()))
+if(mes<0 || (mes===0 && hoje.getDate()<nascimento.getDate())){
+
 idade--;
 
+}
+
+
+
+let resultado=
+document.getElementById("resultadoIdade");
 
 
 if(idade>=18){
 
-document.getElementById("resultadoIdade").innerHTML=
-"<div class='ok'>ACESSO PERMITIDO</div>";
 
-somSucesso();
+resultado.innerHTML=
+"<div class='ok'>✅ ACESSO PERMITIDO</div>";
 
 
 setTimeout(()=>{
@@ -502,21 +485,16 @@ trocar("riscos");
 }else{
 
 
-document.getElementById("resultadoIdade").innerHTML=
-"<div class='erro'>ACESSO NEGADO</div>";
+resultado.innerHTML=
+"<div class='erro'>❌ ACESSO NEGADO</div>";
 
 tremer();
 
-somErro();
-
 
 }
 
 
-
 }
-
-
 
 
 
@@ -527,9 +505,7 @@ trocar("final");
 }
 
 
-
 </script>
-
 
 </body>
 </html>

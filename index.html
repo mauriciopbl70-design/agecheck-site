@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,146 +9,130 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    min-height:100vh;
-    background:#06140F;
-    color:#E8E3D8;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:'PT Sans', sans-serif;
+height:100vh;
+background:#06140F;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#E8E3D8;
+font-family:Arial,sans-serif;
 }
 
-.container{
-    width:90%;
-    max-width:430px;
-    background:#0B1712;
-    padding:35px;
-    border-radius:18px;
-    border:1px solid #1F5A45;
-    text-align:center;
-    box-shadow:0 0 30px rgba(31,90,69,0.4);
+.box{
+width:90%;
+max-width:420px;
+background:#0B1712;
+padding:35px;
+border-radius:18px;
+border:1px solid #1F5A45;
+text-align:center;
+box-shadow:0 0 25px #1F5A45;
 }
 
 .tela{
-    display:none;
+display:none;
 }
 
 .ativa{
-    display:block;
+display:block;
 }
 
 h1{
-    font-size:45px;
-    color:#F5B800;
-    font-family:'PT Sans', sans-serif;
-    font-style:italic;
+font-family:"PT Sans",sans-serif;
+font-style:italic;
+font-size:45px;
+color:#F5B800;
 }
 
 h2{
-    margin-bottom:20px;
-    color:#F5B800;
+color:#F5B800;
+margin-bottom:15px;
 }
 
 p{
-    margin:15px 0;
-    font-size:18px;
+margin:15px 0;
 }
 
 input{
-    width:100%;
-    padding:14px;
-    margin:8px 0;
-    background:#06140F;
-    color:#E8E3D8;
-    border:1px solid #1F5A45;
-    border-radius:8px;
-    outline:none;
-}
-
-input:focus{
-    border-color:#F5B800;
+width:100%;
+padding:13px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #1F5A45;
+background:#06140F;
+color:white;
 }
 
 button{
-    width:100%;
-    margin-top:15px;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#F5B800;
-    color:#06140F;
-    font-weight:bold;
-    font-size:18px;
-    cursor:pointer;
-    transition:.3s;
+width:100%;
+padding:14px;
+margin-top:15px;
+border:0;
+border-radius:10px;
+background:#F5B800;
+color:#06140F;
+font-weight:bold;
+font-size:18px;
+cursor:pointer;
 }
 
 button:hover{
-    transform:scale(1.04);
-    box-shadow:0 0 25px #F5B800;
+box-shadow:0 0 20px #F5B800;
 }
 
-.reprovado{
-    margin-top:20px;
-    color:#ff3030;
-    font-family:'Poppins',sans-serif;
-    font-style:italic;
-    font-size:30px;
+.erro{
+color:red;
+font-family:"Poppins",sans-serif;
+font-style:italic;
+font-size:28px;
+margin-top:15px;
 }
 
-.aprovado{
-    margin-top:20px;
-    color:#F5B800;
-    font-size:26px;
+.ok{
+color:#F5B800;
+font-size:25px;
+margin-top:15px;
 }
-
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
 
 <div id="inicio" class="tela ativa">
-
 <h1>AgeCheck</h1>
+<p>Informação e prevenção para escolhas mais conscientes.</p>
 
-<p>
-Informação e prevenção para escolhas mais conscientes.
-</p>
-
-<button onclick="abrirIdentidade()">
+<button onclick="abrir('identidade')">
 COMEÇAR
 </button>
-
 </div>
-  <div id="identidade" class="tela">
+
+
+<div id="identidade" class="tela">
 
 <h2>Verificação de identidade</h2>
 
-<p>Digite seus dados para continuar</p>
+<input id="nome" placeholder="Nome completo">
 
-<input id="nome" type="text" placeholder="Nome completo">
+<input id="cpf" placeholder="CPF">
 
-<input id="cpf" type="text" placeholder="CPF">
+<p id="tent">Tentativas restantes: 3</p>
 
-<p id="tentativas">
-Tentativas restantes: 3
-</p>
-
-<button onclick="verificarIdentidade()">
+<button onclick="verificar()">
 VERIFICAR
 </button>
 
-<div id="resultado"></div>
+<div id="msg"></div>
 
 </div>
 
@@ -158,26 +141,13 @@ VERIFICAR
 
 <h2>Verificação de idade</h2>
 
-<p>Informe sua data de nascimento</p>
+<input id="data" type="date">
 
-<input id="dataNascimento" type="date">
-
-<button onclick="verificarIdade()">
+<button onclick="idade()">
 CONTINUAR
 </button>
 
-<div id="resultadoIdade"></div>
-
-</div>
-
-
-<div id="final" class="tela">
-
-<h1>Concluído</h1>
-
-<p>
-Obrigado por utilizar o sistema.
-</p>
+<div id="msgIdade"></div>
 
 </div>
 
@@ -187,115 +157,82 @@ Obrigado por utilizar o sistema.
 
 <script>
 
-let tentativas = 3;
+let tentativas=3;
 
 
-function trocarTela(tela){
+function abrir(id){
 
-document.querySelectorAll(".tela").forEach(function(item){
-
-item.classList.remove("ativa");
-
+document.querySelectorAll(".tela").forEach(t=>{
+t.classList.remove("ativa");
 });
 
-document.getElementById(tela).classList.add("ativa");
+document.getElementById(id).classList.add("ativa");
 
 }
 
 
-
-function abrirIdentidade(){
-
-trocarTela("identidade");
-
-}
-
-
-
-// validação básica do CPF
 
 function validarCPF(cpf){
 
-cpf = cpf.replace(/\D/g,'');
+cpf=cpf.replace(/\D/g,"");
 
-if(cpf.length !== 11){
-return false;
-}
+if(cpf.length!=11) return false;
 
-if(/^(\d)\1+$/.test(cpf)){
-return false;
-}
+if(/^(\d)\1+$/.test(cpf)) return false;
 
-let soma = 0;
 
-for(let i=0;i<9;i++){
+let soma=0;
 
-soma += Number(cpf.charAt(i)) * (10-i);
+for(let i=0;i<9;i++)
+soma+=cpf[i]*(10-i);
 
-}
+let resto=(soma*10)%11;
 
-let resto = (soma*10)%11;
+if(resto==10) resto=0;
 
-if(resto===10){
-resto=0;
-}
-
-if(resto !== Number(cpf.charAt(9))){
-return false;
-}
+if(resto!=cpf[9]) return false;
 
 
 soma=0;
 
-for(let i=0;i<10;i++){
-
-soma += Number(cpf.charAt(i))*(11-i);
-
-}
+for(let i=0;i<10;i++)
+soma+=cpf[i]*(11-i);
 
 resto=(soma*10)%11;
 
-if(resto===10){
-resto=0;
-}
+if(resto==10) resto=0;
 
-return resto === Number(cpf.charAt(10));
+return resto==cpf[10];
 
 }
 
 
 
-function verificarIdentidade(){
+function verificar(){
 
 let nome=document.getElementById("nome").value;
-
 let cpf=document.getElementById("cpf").value;
+let msg=document.getElementById("msg");
 
-let resultado=document.getElementById("resultado");
 
-if(nome.length < 5 || !validarCPF(cpf)){
+if(nome.length<5 || !validarCPF(cpf)){
 
 tentativas--;
 
-document.getElementById("tentativas").innerHTML =
-"";
-  document.getElementById("tentativas").innerHTML =
-"");
+document.getElementById("tent").innerHTML=
+"Tentativas restantes: "+tentativas;
 
-if(tentativas > 0){
 
-document.getElementById("tentativas").innerHTML =
-"(" + tentativas + ") tentativas restantes";
+msg.innerHTML=
+"<div class='erro'>REPROVADO</div>";
 
-resultado.innerHTML =
-"<div class='reprovado'>REPROVADO</div>";
 
-}else{
+if(tentativas<=0){
 
-resultado.innerHTML =
-"<div class='reprovado'>ACESSO BLOQUEADO</div>";
+document.querySelector("#identidade button").disabled=true;
 
-document.querySelector("#identidade button").disabled = true;
+msg.innerHTML=
+"<div class='erro'>ACESSO BLOQUEADO</div>";
 
 }
 
@@ -304,77 +241,54 @@ return;
 }
 
 
-resultado.innerHTML =
-"<div class='aprovado'>IDENTIDADE CONFIRMADA</div>";
+msg.innerHTML=
+"<div class='ok'>IDENTIDADE CONFIRMADA</div>";
 
-setTimeout(function(){
 
-trocarTela("idade");
-
-},1500);
-
+setTimeout(()=>{
+abrir("idade");
+},1200);
 
 }
 
 
 
-function verificarIdade(){
+function idade(){
 
-let data =
-document.getElementById("dataNascimento").value;
+let data=document.getElementById("data").value;
 
-
-if(!data){
-
-return;
-
-}
+if(!data)return;
 
 
-let nascimento =
-new Date(data);
-
-let hoje =
-new Date();
+let nasc=new Date(data);
+let hoje=new Date();
 
 
-let idade =
-hoje.getFullYear() -
-nascimento.getFullYear();
+let idade=
+hoje.getFullYear()-nasc.getFullYear();
 
 
-let mes =
-hoje.getMonth() -
-nascimento.getMonth();
+let mes=
+hoje.getMonth()-nasc.getMonth();
 
 
-if(mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())){
-
+if(mes<0 || (mes==0 && hoje.getDate()<nasc.getDate()))
 idade--;
 
-}
 
+if(idade>=18){
 
-
-let resultado =
-document.getElementById("resultadoIdade");
-
-
-if(idade >= 18){
-
-resultado.innerHTML =
-"<div class='aprovado'>ACESSO PERMITIDO</div>";
+document.getElementById("msgIdade").innerHTML=
+"<div class='ok'>ACESSO PERMITIDO</div>";
 
 }else{
 
-resultado.innerHTML =
-"<div class='reprovado'>ACESSO NEGADO</div>";
+document.getElementById("msgIdade").innerHTML=
+"<div class='erro'>ACESSO NEGADO</div>";
 
 }
 
-
 }
-
 
 </script>
 

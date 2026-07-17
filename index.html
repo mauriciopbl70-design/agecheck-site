@@ -4,57 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AgeCheck</title>
+<title>AgeCheck 2.0</title>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    color: white;
-    text-align: center;
-    margin: 0;
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
 }
 
-header {
-    background: #2563eb;
-    padding: 30px;
+header{
+background:#2563eb;
+padding:30px;
 }
 
-.card {
-    background: white;
-    color: black;
-    width: 80%;
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 25px;
-    border-radius: 15px;
+.card{
+background:white;
+color:black;
+width:85%;
+max-width:450px;
+margin:30px auto;
+padding:25px;
+border-radius:15px;
 }
 
-input {
-    padding: 10px;
-    width: 90%;
-    margin: 15px;
+input{
+width:90%;
+padding:10px;
+margin:8px;
 }
 
-button {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    cursor: pointer;
+button{
+background:#2563eb;
+color:white;
+border:0;
+padding:12px 25px;
+border-radius:10px;
+cursor:pointer;
 }
 
-button:hover {
-    background: #1d4ed8;
+button:hover{
+background:#1d4ed8;
 }
 
-#resultado {
-    margin-top: 20px;
+#resultado{
+margin-top:20px;
+font-weight:bold;
 }
 
-.info {
-    padding: 20px;
+.info{
+padding:20px;
 }
 </style>
 
@@ -63,8 +63,8 @@ button:hover {
 <body>
 
 <header>
-    <h1>AgeCheck</h1>
-    <p>Tecnologia para prevenção do consumo de álcool por menores</p>
+<h1>AgeCheck 2.0</h1>
+<p>Sistema inteligente de prevenção ao consumo de álcool por menores</p>
 </header>
 
 
@@ -72,15 +72,19 @@ button:hover {
 
 <h2>Verificação de idade</h2>
 
-<p>Digite sua data de nascimento:</p>
+<input id="nome" placeholder="Nome">
 
 <input type="date" id="nascimento">
 
-<br>
+<p>Enviar documento (simulação)</p>
 
-<button onclick="verificarIdade()">
-Verificar
-</button>
+<input type="file" id="documento">
+
+
+<p>Reconhecimento facial (simulação)</p>
+
+<button onclick="verificar()">Iniciar análise</button>
+
 
 <h3 id="resultado"></h3>
 
@@ -89,60 +93,66 @@ Verificar
 
 <div class="info">
 
-<h2>Sobre o projeto</h2>
+<h2>Como funciona?</h2>
 
 <p>
-O AgeCheck é um protótipo de sistema tecnológico
-criado para auxiliar na prevenção da venda de bebidas
-alcoólicas para menores de idade.
+O AgeCheck utiliza múltiplas etapas de verificação
+para dificultar fraudes e auxiliar estabelecimentos
+na prevenção da venda de bebidas alcoólicas para menores.
 </p>
 
 </div>
 
 
-
 <script>
 
-function verificarIdade(){
+function verificar(){
 
-let nascimento = document.getElementById("nascimento").value;
+let nome=document.getElementById("nome").value;
+let nascimento=document.getElementById("nascimento").value;
+let documento=document.getElementById("documento").value;
 
-if(nascimento == ""){
-document.getElementById("resultado").innerHTML =
-"Digite uma data válida.";
+
+if(nome=="" || nascimento==""){
+document.getElementById("resultado").innerHTML=
+"⚠️ Preencha todos os dados.";
 return;
 }
 
 
-let data = new Date(nascimento);
-let hoje = new Date();
+let data=new Date(nascimento);
+let hoje=new Date();
+
+let idade=hoje.getFullYear()-data.getFullYear();
 
 
-let idade = hoje.getFullYear() - data.getFullYear();
+if(idade>=18 && documento!=""){
 
-let mes = hoje.getMonth() - data.getMonth();
+document.getElementById("resultado").innerHTML=
+"✅ Verificação aprovada<br>"+
+nome+" possui idade permitida.<br>"+
+"Documento analisado com sucesso.";
 
-if(mes < 0 || (mes === 0 && hoje.getDate() < data.getDate())){
-idade--;
 }
 
+else if(idade>=18 && documento==""){
 
-if(idade >= 18){
+document.getElementById("resultado").innerHTML=
+"⚠️ Idade permitida, porém falta confirmar documento.";
 
-document.getElementById("resultado").innerHTML =
-"✅ Acesso permitido: maior de idade.";
+}
 
-}else{
+else{
 
-document.getElementById("resultado").innerHTML =
-"❌ Acesso bloqueado: menor de idade.";
+document.getElementById("resultado").innerHTML=
+"❌ Acesso bloqueado.<br>"+
+"Usuário menor de idade.";
 
 }
 
 }
 
 </script>
-
 
 </body>
 </html>
